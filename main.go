@@ -64,6 +64,9 @@ func main() {
 			filepath.Join(sudachiConfigPath, "sudachi.json"),
 		)
 
+		// ! Install plugins
+		InstallPlugins()
+
 		fmt.Println("")
 		fmt.Println("All setup Done!")
 		fmt.Println("")

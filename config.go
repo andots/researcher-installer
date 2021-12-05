@@ -3,6 +3,8 @@ package main
 import (
 	"errors"
 	"fmt"
+	"os/exec"
+	"path/filepath"
 	"runtime"
 )
 
@@ -11,8 +13,10 @@ const ES_NAME = "elasticsearch-7.10.1"
 
 const DR_DICT_URL = "https://raw.githubusercontent.com/uschindler/german-decompounder/master/dictionary-de.txt"
 const DR_XML_URL = "https://raw.githubusercontent.com/uschindler/german-decompounder/master/de_DR.xml"
+
 const SUDACHI_URL = "http://sudachi.s3-website-ap-northeast-1.amazonaws.com/sudachidict/sudachi-dictionary-20210802-full.zip"
 const SUDACHI_JSON_URL = "https://raw.githubusercontent.com/andots/researcher-docker/main/sudachi.json"
+const SUDACHI_PLUGIN_URL = "https://github.com/WorksApplications/elasticsearch-sudachi/releases/download/v2.1.0/analysis-sudachi-7.10.1-2.1.0.zip"
 const SUDACHI_ZIP_NAME = "sudachi-dictionary-20210802-full.zip"
 const SUDACHI_DIR_NAME = "sudachi-dictionary-20210802"
 
@@ -30,8 +34,28 @@ func GetESFilename() (string, error) {
 	}
 }
 
-func GetESUrl () string {
+func GetESUrl() string {
 	filename, err := GetESFilename()
 	HandleError(err)
 	return ES_BASE_URL + filename
+}
+
+func InstallPlugins() {
+	cmd := filepath.Join(GetAppPath(), ES_NAME, "bin", "elasticsearch-plugin")
+	_, err := exec.LookPath(cmd)
+	HandleError(err)
+
+	// https://github.com/WorksApplications/elasticsearch-sudachi/releases/download/v2.1.0/analysis-sudachi-7.10.1-2.1.0.zip
+	// analysis-smartcn
+	// analysis-nori
+	installPlugin(cmd, "https://github.com/WorksApplications/elasticsearch-sudachi/releases/download/v2.1.0/analysis-sudachi-7.10.1-2.1.0.zip")
+	installPlugin(cmd, "analysis-nori")
+	installPlugin(cmd, "analysis-smartcn")
+}
+
+func installPlugin(cmd string, plugin string) {
+	fmt.Printf("[PLUGIN]: Installing %s ..... ", plugin)
+	err := exec.Command(cmd, "install", plugin).Run()
+	HandleError(err)
+	fmt.Printf("Done!\n")
 }

@@ -100,7 +100,8 @@ func BlockForWindows() {
 
 func HandleError(err error) {
 	if err != nil {
-		log.Println("err:", err)
+		log.Println("")
+		log.Println("[ERROR]", err)
 		BlockForWindows()
 		os.Exit(1)
 	}
