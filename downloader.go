@@ -47,7 +47,7 @@ func (d *Downloader) Start() error {
 	fmt.Println("Start downloading....")
 	fmt.Println("")
 	d.pool = make(chan *Target, d.MaxConcurrents)
-	pb := mpb.New(mpb.WithWaitGroup(d.wg), mpb.WithWidth(60))
+	pb := mpb.New(mpb.WithWaitGroup(d.wg), mpb.WithWidth(40))
 	for _, target := range d.Targets {
 		d.wg.Add(1)
 		go d.download(target, pb)
