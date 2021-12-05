@@ -12,7 +12,8 @@ func main() {
 	confirmed := ShowConfirmation()
 
 	if (confirmed) {
-		dir := CreateAppDir()
+		CreateAppDirectories()
+		dir := GetSrcPath()
 		// urls := MakeDownloadUrls()
 		urls := []string{
 			"https://raw.githubusercontent.com/uschindler/german-decompounder/master/dictionary-de.txt",

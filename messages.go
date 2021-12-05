@@ -25,7 +25,7 @@ func ShowWelcomeMessage() {
 	fmt.Println("")
 	fmt.Println("Elasticsearch will be installed to the following location.")
 	fmt.Println("")
-	Red("[ " + GetAppDirPath() + " ]")
+	Red("[ " + GetAppPath() + " ]")
 	fmt.Println("")
 }
 

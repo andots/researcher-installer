@@ -37,20 +37,39 @@ func MakeDownloadUrls() ([]string) {
 }
 
 // Return $HOME/researcher
-func GetAppDirPath() string {
+func GetAppPath() string {
 	homeDir, err := os.UserHomeDir()
 	HandleError(err)
 	dir := filepath.Join(homeDir, "researcher")
 	return dir
 }
 
-// Create app directory $HOME/researcher
-func CreateAppDir() string {
-	dir := GetAppDirPath()
-	err := os.MkdirAll(dir, os.ModePerm)
-	HandleError(err)
+// Return $HOME/researcher/src
+func GetSrcPath() string {
+	appdir := GetAppPath()
+	dir := filepath.Join(appdir, "src")
 	return dir
 }
+
+func CreateAppDirectories() {
+	appPath := GetAppPath()
+	CreateDir(appPath)
+	srcPath := GetSrcPath()
+	CreateDir(srcPath)
+}
+
+func CreateDir(path string) {
+	err := os.MkdirAll(path, os.ModePerm)
+	HandleError(err)
+}
+
+// Create app directory $HOME/researcher
+// func CreateAppDir() string {
+// 	dir := GetAppPath()
+// 	err := os.MkdirAll(dir, os.ModePerm)
+// 	HandleError(err)
+// 	return dir
+// }
 
 func GetCurrentDir() string {
 	currentPath, err := os.Getwd()
@@ -59,7 +78,7 @@ func GetCurrentDir() string {
 }
 
 func RemoveAppDir() {
-	dir := GetAppDirPath()
+	dir := GetAppPath()
 	err := os.RemoveAll(dir)
 	HandleError(err)
 }
