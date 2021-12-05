@@ -45,7 +45,14 @@ func CreateAppDirectories() {
 }
 
 func CreateDir(path string) {
+	fmt.Printf("[CREATE]: %s\n", path)
 	err := os.MkdirAll(path, os.ModePerm)
+	HandleError(err)
+}
+
+func MoveFile(from string, to string) {
+	fmt.Printf("[MOVE]: %s to %s\n", from, to)
+	err := os.Rename(from, to)
 	HandleError(err)
 }
 

@@ -12,7 +12,7 @@ import (
 
 func ExtractFile(path string, to string) {
 	filename := filepath.Base(path)
-	fmt.Printf("Extracting %s ..... ", filename)
+	fmt.Printf("[Extract]: %s ..... ", filename)
 	data, err := ioutil.ReadFile(path)
 	HandleError(err)
 
