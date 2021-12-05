@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
 func main() {
@@ -13,21 +14,18 @@ func main() {
 	if (confirmed) {
 		CreateAppDirectories()
 		srcPath := GetSrcPath()
+
+		// ! Download files
 		urls := MakeDownloadUrls()
-		// urls := []string{
-		// 	"https://raw.githubusercontent.com/uschindler/german-decompounder/master/dictionary-de.txt",
-		// 	"https://raw.githubusercontent.com/uschindler/german-decompounder/master/de_DR.xml",
-		// 	"https://github.com/codeclysm/extract/raw/master/testdata/archive.zip",
-		// 	"https://github.com/codeclysm/extract/raw/master/testdata/archive.tar.gz",
-		// }
 		d := NewDownloader(srcPath, urls)
 		err := d.Start()
 		HandleError(err)
 
 		// ! Extract Elasticsearch
-		// to := GetAppPath()
-		// ExtractFile(filepath.Join(srcPath, "archive.zip"), to)
-		// fmt.Printf("Extracted: %v\n", "archive.zip")
+		to := GetAppPath()
+		// esFilename, err := GetESFilename()
+		HandleError(err)
+		ExtractFile(filepath.Join(srcPath, "archive.tar.gz"), to)
 
 	} else {
 		fmt.Println("Cancel!")
@@ -36,3 +34,10 @@ func main() {
 
 	BlockForWindows()
 }
+
+// urls := []string{
+// 	"https://raw.githubusercontent.com/uschindler/german-decompounder/master/dictionary-de.txt",
+// 	"https://raw.githubusercontent.com/uschindler/german-decompounder/master/de_DR.xml",
+// 	"https://github.com/codeclysm/extract/raw/master/testdata/archive.zip",
+// 	"https://github.com/codeclysm/extract/raw/master/testdata/archive.tar.gz",
+// }

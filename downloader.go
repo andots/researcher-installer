@@ -89,6 +89,7 @@ func (d *Downloader) download(target Target, pb *mpb.Progress) error {
 
 		req, err := http.NewRequest(http.MethodGet, target.Url, nil)
 		if err != nil {
+			file.Close()
 			return err
 		}
 
