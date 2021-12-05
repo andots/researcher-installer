@@ -13,22 +13,18 @@ import (
 
 func MakeDownloadUrls() ([]string) {
 	urls := []string {
-		"https://raw.githubusercontent.com/uschindler/german-decompounder/master/dictionary-de.txt",
-		"https://raw.githubusercontent.com/uschindler/german-decompounder/master/de_DR.xml",
-		"http://sudachi.s3-website-ap-northeast-1.amazonaws.com/sudachidict/sudachi-dictionary-20210802-full.zip",
+		DR_DICT_URL,
+		DR_XML_URL,
+		SUDACHI_URL,
 	}
-
-	esWinUrl := "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.10.1-windows-x86_64.zip"
-	esMacUrl := "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.10.1-darwin-x86_64.tar.gz"
-	esLinuxUrl := "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.10.1-linux-x86_64.tar.gz"
 
 	switch runtime.GOOS {
 	case "windows":
-		urls = append(urls, esWinUrl)
+		urls = append(urls, ES_WIN_URL)
 	case "darwin":
-		urls = append(urls, esMacUrl)
+		urls = append(urls, ES_MAC_URL)
 	case "linux":
-		urls = append(urls, esLinuxUrl)
+		urls = append(urls, ES_LINUX_URL)
 	default:
 		HandleError(errors.New("Elasticsearch supports Windows, Mac, and Linux."))
 	}
