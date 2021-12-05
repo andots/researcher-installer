@@ -89,6 +89,11 @@ func GetFileName(download_url string) string {
 	return filepath.Base(url_struct.Path)
 }
 
+func FileExists(path string) bool {
+	_, err := os.Stat(path)
+	return err == nil
+}
+
 func BlockForWindows() {
 	if runtime.GOOS == "windows" {
 		for {

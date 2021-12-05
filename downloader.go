@@ -76,50 +76,56 @@ func (d *Downloader) download(target Target, pb *mpb.Progress) error {
 
 	filename := target.Filename
 	filePath := filepath.Join(d.SaveDir, target.Filename)
-	file, err := os.Create(filePath)
-	if err != nil {
+
+	// ! Check file exists and skip downloading if exists
+	if (FileExists(filePath)) {
+		fmt.Printf("%v is found. Skip downloading this file.\n", filePath)
+	} else {
+		file, err := os.Create(filePath)
+		if err != nil {
+			file.Close()
+			return err
+		}
+
+		req, err := http.NewRequest(http.MethodGet, target.Url, nil)
+		if err != nil {
+			return err
+		}
+
+		resp, err := http.DefaultClient.Do(req)
+		if err != nil {
+			file.Close()
+			return err
+		}
+
+		defer resp.Body.Close()
+
+		fileSize, _ := strconv.Atoi(resp.Header.Get("Content-Length"))
+		bar := pb.AddBar(
+			int64(fileSize),
+			mpb.PrependDecorators(
+				decor.Name(filename, decor.WCSyncSpaceR),
+				// decor.Name(filename, decor.WC{W: len(filename) + 1, C: decor.DidentRight}),
+				// decor.Spinner(nil, decor.WCSyncSpace),
+			),
+			mpb.AppendDecorators(
+				decor.CountersKibiByte("% .2f / % .2f"),
+				// decor.OnComplete(
+				// 	decor.EwmaETA(decor.ET_STYLE_GO, 60, decor.WCSyncSpaceR), "done",
+				// ),
+				// decor.Percentage(decor.WCSyncSpace, decor.WCSyncSpaceR),
+			),
+		)
+		reader := bar.ProxyReader(resp.Body)
+		defer reader.Close()
+
+		if _, err := io.Copy(file, reader); err != nil {
+			file.Close()
+			return err
+		}
+
 		file.Close()
-		return err
 	}
-
-	req, err := http.NewRequest(http.MethodGet, target.Url, nil)
-	if err != nil {
-		return err
-	}
-
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		file.Close()
-		return err
-	}
-
-	defer resp.Body.Close()
-
-	fileSize, _ := strconv.Atoi(resp.Header.Get("Content-Length"))
-	bar := pb.AddBar(
-		int64(fileSize),
-		mpb.PrependDecorators(
-			decor.Name(filename, decor.WCSyncSpaceR),
-			// decor.Name(filename, decor.WC{W: len(filename) + 1, C: decor.DidentRight}),
-			// decor.Spinner(nil, decor.WCSyncSpace),
-		),
-		mpb.AppendDecorators(
-			decor.CountersKibiByte("% .2f / % .2f"),
-			// decor.OnComplete(
-			// 	decor.EwmaETA(decor.ET_STYLE_GO, 60, decor.WCSyncSpaceR), "done",
-			// ),
-			// decor.Percentage(decor.WCSyncSpace, decor.WCSyncSpaceR),
-		),
-	)
-	reader := bar.ProxyReader(resp.Body)
-	defer reader.Close()
-
-	if _, err := io.Copy(file, reader); err != nil {
-		file.Close()
-		return err
-	}
-
-	file.Close()
 
 	<-d.pool
 
