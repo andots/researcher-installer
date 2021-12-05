@@ -15,6 +15,7 @@ func MakeDownloadUrls() ([]string) {
 		DR_DICT_URL,
 		DR_XML_URL,
 		SUDACHI_URL,
+		SUDACHI_JSON_URL,
 	}
 
 	urls = append(urls, GetESUrl())
