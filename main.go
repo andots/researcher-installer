@@ -12,6 +12,7 @@ func main() {
 	confirmed := ShowConfirmation()
 
 	if (confirmed) {
+		fmt.Println("")
 		CreateAppDirectories()
 		srcPath := GetSrcPath()
 
@@ -56,6 +57,16 @@ func main() {
 			filepath.Join(srcPath, SUDACHI_DIR_NAME, "system_full.dic"),
 			filepath.Join(sudachiConfigPath, "system_core.dic"),
 		)
+
+		// mv src/sudachi.json to config/sudachi/sudachi.json
+		MoveFile(
+			filepath.Join(srcPath, "sudachi.json"),
+			filepath.Join(sudachiConfigPath, "sudachi.json"),
+		)
+
+		fmt.Println("")
+		fmt.Println("All setup Done!")
+		fmt.Println("")
 
 	} else {
 		fmt.Println("Cancel!")

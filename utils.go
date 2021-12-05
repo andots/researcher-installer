@@ -52,7 +52,8 @@ func CreateDir(path string) {
 }
 
 func MoveFile(from string, to string) {
-	fmt.Printf("[MOVE]: %s to %s\n", from, to)
+	name := filepath.Base(from)
+	fmt.Printf("[MOVE]:   %s to %s\n", name, to)
 	err := os.Rename(from, to)
 	HandleError(err)
 }
