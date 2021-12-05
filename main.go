@@ -23,15 +23,15 @@ func main() {
 		HandleError(err)
 
 		// ! Extract sudachi dict to src dir
-		// ExtractFile(filepath.Join(srcPath, SUDACHI_ZIP_NAME), srcPath)
+		ExtractFile(filepath.Join(srcPath, SUDACHI_ZIP_NAME), srcPath)
 
 		// ! Extract Elasticsearch to app dir
-		// esFilename, err := GetESFilename()
-		// HandleError(err)
-		// ExtractFile(filepath.Join(srcPath, esFilename), GetAppPath())
+		esFilename, err := GetESFilename()
+		HandleError(err)
+		ExtractFile(filepath.Join(srcPath, esFilename), GetAppPath())
 
 		// ! Create config dirs
-		esPath := filepath.Join(GetAppPath(), ES_NAME)
+		esPath := GetESPath()
 		sudachiConfigPath := filepath.Join(esPath, "config", "sudachi")
 		deConfigPath := filepath.Join(esPath, "config", "analysis", "de")
 		CreateDir(sudachiConfigPath)
@@ -67,10 +67,7 @@ func main() {
 		// ! Install plugins
 		InstallPlugins()
 
-		fmt.Println("")
-		fmt.Println("All setup Done!")
-		fmt.Println("")
-
+		ShowEndMessage()
 	} else {
 		fmt.Println("Cancel!")
 		os.Exit(1)

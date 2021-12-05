@@ -38,6 +38,10 @@ func GetSrcPath() string {
 	return dir
 }
 
+func GetESPath() string {
+	return filepath.Join(GetAppPath(), ES_NAME)
+}
+
 func CreateAppDirectories() {
 	appPath := GetAppPath()
 	CreateDir(appPath)

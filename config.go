@@ -41,7 +41,7 @@ func GetESUrl() string {
 }
 
 func InstallPlugins() {
-	cmd := filepath.Join(GetAppPath(), ES_NAME, "bin", "elasticsearch-plugin")
+	cmd := filepath.Join(GetESPath(), "bin", "elasticsearch-plugin")
 	_, err := exec.LookPath(cmd)
 	HandleError(err)
 
