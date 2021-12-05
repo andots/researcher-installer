@@ -21,10 +21,13 @@ func main() {
 		err := d.Start()
 		HandleError(err)
 
-		// ! Extract Elasticsearch
-		// esFilename, err := GetESFilename()
+		// ! Extract sudachi dict to src dir
+		ExtractFile(filepath.Join(srcPath, SUDACHI_ZIP_NAME), srcPath)
+
+		// ! Extract Elasticsearch to app dir
+		esFilename, err := GetESFilename()
 		HandleError(err)
-		ExtractFile(filepath.Join(srcPath, "Pictures.zip"), GetAppPath())
+		ExtractFile(filepath.Join(srcPath, esFilename), GetAppPath())
 
 	} else {
 		fmt.Println("Cancel!")

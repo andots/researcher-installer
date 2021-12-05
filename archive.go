@@ -21,7 +21,7 @@ func ExtractFile(path string, to string) {
 	if err != nil {
 		HandleError(err)
 	}
-	fmt.Print("Done!\n\n")
+	fmt.Print("Done!\n")
 }
 
 	// s := spinner.New(spinner.CharSets[36], 100 * time.Millisecond)
