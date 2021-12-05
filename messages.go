@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"runtime"
 
 	"github.com/deiwin/interact"
@@ -35,17 +36,25 @@ func ShowConfirmation() bool {
 }
 
 func ShowEndMessage() {
-	color.Set(color.FgGreen)
 	fmt.Println("")
+	color.Set(color.FgGreen)
 	fmt.Println("Setup successfully done!")
+	color.Unset()
+	fmt.Println("")
+
 	switch runtime.GOOS {
 	case "windows":
-		fmt.Printf("Please run %s/elasticsearch.bat to start server.\n", GetESPath())
+		cmdPath := filepath.Join(GetESPath(), "elasticsearch.bat")
+		fmt.Printf("Execute %s to start Elasticsearch.\n", cmdPath)
+		fmt.Println("You can also register Elasticsearch as a Windows service to run in the background or start automatically after login.")
+		fmt.Println("")
+		fmt.Println("Please see the document to get more information.")
+		fmt.Println("https://github.com/andots/researcher-webextension/blob/main/docs/windows/README.md")
 	default:
-		fmt.Printf("Please run %s/elasticsearch to start server.\n", GetESPath())
+		cmdPath := filepath.Join(GetESPath(), "elasticsearch")
+		fmt.Printf("Please run %s to start Elasticsearch.\n", cmdPath)
 	}
 	fmt.Println("")
-	color.Unset()
 }
 
 func Red(text string) {
