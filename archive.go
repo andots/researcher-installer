@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"context"
+	"fmt"
 	"os"
 
 	"github.com/codeclysm/extract/v3"
@@ -32,11 +33,11 @@ func ExtractFile(path string, to string) {
 	}
 
 	pb := mpb.NewWithContext(ctx, mpb.WithWidth(60))
+	title := fmt.Sprintf("[Extract]: %v", fi.Name())
 	bar := pb.AddBar(
 		fi.Size(),
 		mpb.PrependDecorators(
-			decor.Name("[Extract]", decor.WCSyncSpaceR),
-			// decor.Name(filename, decor.WC{W: len(filename) + 1, C: decor.DidentRight}),
+			decor.Name(title, decor.WCSyncSpaceR),
 			// decor.Spinner(nil, decor.WCSyncSpace),
 		),
 		// mpb.AppendDecorators(
