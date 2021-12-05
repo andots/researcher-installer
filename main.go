@@ -18,6 +18,7 @@ func main() {
 		// urls := []string{
 		// 	"https://raw.githubusercontent.com/uschindler/german-decompounder/master/dictionary-de.txt",
 		// 	"https://raw.githubusercontent.com/uschindler/german-decompounder/master/de_DR.xml",
+		//  "https://github.com/codeclysm/extract/raw/master/testdata/archive.zip",
 		// }
 		d := NewDownloader(dir, urls)
 		err := d.Start()
