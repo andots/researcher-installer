@@ -1,65 +1,63 @@
 package main
 
 import (
-	"bufio"
+	"bytes"
 	"context"
 	"fmt"
-	"os"
+	"io/ioutil"
 
 	"github.com/codeclysm/extract/v3"
-	"github.com/vbauerster/mpb/v7"
-	"github.com/vbauerster/mpb/v7/decor"
 )
 
 func ExtractFile(path string, to string) {
-	ctx := context.Background()
+	fmt.Print("Extracting files..... ")
+	data, err := ioutil.ReadFile(path)
+	HandleError(err)
 
-	// data, err := ioutil.ReadFile(path)
-	// HandleError(err)
+	buffer := bytes.NewBuffer(data)
+	err = extract.Archive(context.Background(), buffer, to, nil)
+	if err != nil {
+		HandleError(err)
+	}
+	fmt.Print("Done!\n\n")
+}
+
+	// s := spinner.New(spinner.CharSets[36], 100 * time.Millisecond)
+	// s.Prefix = fmt.Sprintln("Extracting files...  ")
+	// s.Start()
 
 	// fi, err := os.Stat(path)
 	// HandleError(err)
 
-	file, err := os.Open(path)
-	if err != nil {
-		file.Close()
-		HandleError(err)
-	}
+	// file, err := os.Open(path)
+	// if err != nil {
+	// 	file.Close()
+	// 	HandleError(err)
+	// }
 
-	fi, err := file.Stat()
-	if err != nil {
-		file.Close()
-		HandleError(err)
-	}
+	// fi, err := file.Stat()
+	// if err != nil {
+	// 	file.Close()
+	// 	HandleError(err)
+	// }
 
-	pb := mpb.NewWithContext(ctx, mpb.WithWidth(60))
-	title := fmt.Sprintf("[Extract]: %v", fi.Name())
-	bar := pb.AddBar(
-		fi.Size(),
-		mpb.PrependDecorators(
-			decor.Name(title, decor.WCSyncSpaceR),
-			// decor.Spinner(nil, decor.WCSyncSpace),
-		),
-		// mpb.AppendDecorators(
-			// decor.CountersKibiByte("% .2f / % .2f"),
-			// decor.OnComplete(
-			// 	decor.EwmaETA(decor.ET_STYLE_GO, 60, decor.WCSyncSpaceR), "done",
-			// ),
-			// decor.Percentage(decor.WCSyncSpace, decor.WCSyncSpaceR),
-		// ),
-	)
+	// pb := mpb.NewWithContext(ctx, mpb.WithWidth(60))
+	// title := fmt.Sprintf("[Extract]: %v", fi.Name())
+	// bar := pb.AddBar(
+	// 	fi.Size(),
+	// 	mpb.PrependDecorators(
+	// 		decor.Name(title, decor.WCSyncSpaceR),
+	// 		// decor.Spinner(nil, decor.WCSyncSpace),
+	// 	),
+	// 	// mpb.AppendDecorators(
+	// 		// decor.CountersKibiByte("% .2f / % .2f"),
+	// 		// decor.OnComplete(
+	// 		// 	decor.EwmaETA(decor.ET_STYLE_GO, 60, decor.WCSyncSpaceR), "done",
+	// 		// ),
+	// 		// decor.Percentage(decor.WCSyncSpace, decor.WCSyncSpaceR),
+	// 	// ),
+	// )
 
-	reader := bufio.NewReader(file)
-	proxyReader := bar.ProxyReader(reader)
-	defer proxyReader.Close()
-
-	// buffer := bytes.NewBuffer(data)
-	err = extract.Archive(ctx, proxyReader, to, nil)
-	if err != nil {
-		file.Close()
-		HandleError(err)
-	}
-
-	file.Close()
-	pb.Wait()
-}
+	// reader := bufio.NewReader(file)
+	// proxyReader := bar.ProxyReader(reader)
+	// defer proxyReader.Close()

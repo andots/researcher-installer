@@ -22,10 +22,10 @@ func main() {
 		HandleError(err)
 
 		// ! Extract Elasticsearch
-		to := GetAppPath()
+		to := srcPath
 		// esFilename, err := GetESFilename()
 		HandleError(err)
-		ExtractFile(filepath.Join(srcPath, "archive.tar.gz"), to)
+		ExtractFile(filepath.Join(srcPath, SUDACHI_ZIP_NAME), to)
 
 	} else {
 		fmt.Println("Cancel!")
