@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"net/url"
@@ -18,16 +17,7 @@ func MakeDownloadUrls() ([]string) {
 		SUDACHI_URL,
 	}
 
-	switch runtime.GOOS {
-	case "windows":
-		urls = append(urls, ES_WIN_URL)
-	case "darwin":
-		urls = append(urls, ES_MAC_URL)
-	case "linux":
-		urls = append(urls, ES_LINUX_URL)
-	default:
-		HandleError(errors.New("Elasticsearch supports Windows, Mac, and Linux."))
-	}
+	urls = append(urls, GetESUrl())
 
 	return urls
 }
