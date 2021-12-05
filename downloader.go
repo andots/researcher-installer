@@ -79,7 +79,7 @@ func (d *Downloader) download(target Target, pb *mpb.Progress) error {
 
 	// ! Check file exists and skip downloading if exists
 	if (FileExists(filePath)) {
-		fmt.Printf("%v is found. Skip downloading this file.\n", filePath)
+		fmt.Printf("[SKIP]: Found at %v.\n", filePath)
 	} else {
 		file, err := os.Create(filePath)
 		if err != nil {
