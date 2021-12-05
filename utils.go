@@ -83,7 +83,7 @@ func RemoveAppDir() {
 	HandleError(err)
 }
 
-func GetFileName(download_url string) string {
+func GetFileNameFromUrl(download_url string) string {
 	url_struct, err := url.Parse(download_url)
 	HandleError(err)
 	return filepath.Base(url_struct.Path)

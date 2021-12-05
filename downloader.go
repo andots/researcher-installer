@@ -63,7 +63,7 @@ func (d *Downloader) Start() error {
 }
 
 func (d *Downloader) add(url string) {
-	filename := GetFileName(url)
+	filename := GetFileNameFromUrl(url)
 	d.Targets = append(d.Targets, Target{
 		Url: url,
 		Filename: filename,
