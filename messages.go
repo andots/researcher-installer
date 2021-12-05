@@ -9,16 +9,23 @@ import (
 )
 
 func ShowWelcomeMessage() {
-	color.Set(color.FgBlue)
-	fmt.Println("---------------------------------------------------")
-	fmt.Println("|         RE:SEARCHER Backend Installer           |")
-	fmt.Println("---------------------------------------------------")
+	banner := `
++-------------------------------------------------------------------+
+|                                                                   |
+|                  RE:SEARCHER Backend Installer                    |
+|                                                                   |
++-------------------------------------------------------------------+
+`
+
+	color.Set(color.FgGreen)
+	fmt.Println(banner)
 	color.Unset()
 
 	fmt.Println("This installer will setup Elasticsearch for RE:SEARCHER as search backend.")
 	fmt.Println("")
 	fmt.Println("Elasticsearch will be installed to the following location.")
-	fmt.Println("[ " + GetAppDirPath() + " ]")
+	fmt.Println("")
+	Red("[ " + GetAppDirPath() + " ]")
 	fmt.Println("")
 }
 
