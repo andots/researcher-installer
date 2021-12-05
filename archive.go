@@ -5,12 +5,14 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
+	"path/filepath"
 
 	"github.com/codeclysm/extract/v3"
 )
 
 func ExtractFile(path string, to string) {
-	fmt.Print("Extracting files..... ")
+	filename := filepath.Base(path)
+	fmt.Printf("Extracting %s ..... ", filename)
 	data, err := ioutil.ReadFile(path)
 	HandleError(err)
 
