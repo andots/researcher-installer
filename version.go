@@ -7,7 +7,7 @@ import (
 	latest "github.com/tcnksm/go-latest"
 )
 
-const VERSION string = "v0.9.0"
+const VERSION string = "v0.9.2"
 
 func CheckVersion() {
 	githubTag := &latest.GithubTag{
@@ -19,7 +19,7 @@ func CheckVersion() {
 
 	res, err := latest.Check(githubTag, VERSION)
 	if (err != nil) {
-		fmt.Printf("[ERROR] Checking latest version is failed: %s\n\n", err)
+		fmt.Printf("\n[ERROR] Checking version is failed: %s\n\n", err)
 	} else {
 		if res.Outdated {
 			fmt.Printf("Latest version is %s. Please upgrade!\n\n", res.Current)
