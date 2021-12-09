@@ -40,6 +40,16 @@ func GetESPath() string {
 	return filepath.Join(GetAppPath(), ES_NAME)
 }
 
+// Check Elasticsearch already installed in $HOME/researcher/elasticsertch-x.x.x
+func CheckInstalled() {
+	p := GetESPath()
+	if (FileExists(p)) {
+		fmt.Printf("%s found.\nYou may have already installed Elasticsearch.\n\n", p)
+		BlockForWindows()
+		os.Exit(1)
+	}
+}
+
 func CreateAppDirectories() {
 	appPath := GetAppPath()
 	CreateDir(appPath)
