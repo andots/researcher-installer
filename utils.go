@@ -33,9 +33,7 @@ func GetAppPath() string {
 
 // Return $HOME/researcher/src
 func GetSrcPath() string {
-	appdir := GetAppPath()
-	dir := filepath.Join(appdir, "src")
-	return dir
+	return filepath.Join(GetAppPath(), "src")
 }
 
 func GetESPath() string {
@@ -61,14 +59,6 @@ func MoveFile(from string, to string) {
 	err := os.Rename(from, to)
 	HandleError(err)
 }
-
-// Create app directory $HOME/researcher
-// func CreateAppDir() string {
-// 	dir := GetAppPath()
-// 	err := os.MkdirAll(dir, os.ModePerm)
-// 	HandleError(err)
-// 	return dir
-// }
 
 func GetCurrentDir() string {
 	currentPath, err := os.Getwd()

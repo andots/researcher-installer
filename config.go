@@ -45,9 +45,6 @@ func InstallPlugins() {
 	_, err := exec.LookPath(cmd)
 	HandleError(err)
 
-	// https://github.com/WorksApplications/elasticsearch-sudachi/releases/download/v2.1.0/analysis-sudachi-7.10.1-2.1.0.zip
-	// analysis-smartcn
-	// analysis-nori
 	installPlugin(cmd, "https://github.com/WorksApplications/elasticsearch-sudachi/releases/download/v2.1.0/analysis-sudachi-7.10.1-2.1.0.zip")
 	installPlugin(cmd, "analysis-nori")
 	installPlugin(cmd, "analysis-smartcn")
