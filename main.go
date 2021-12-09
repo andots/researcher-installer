@@ -9,6 +9,8 @@ import (
 func main() {
 	ShowWelcomeMessage()
 
+	OutputVersion()
+
 	CheckInstalled()
 
 	confirmed := ShowConfirmation()
