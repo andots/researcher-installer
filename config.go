@@ -24,11 +24,11 @@ func GetESFilename() (string, error) {
 	// elasticsearch-7.10.1-linux-x86_64.tar.gz
 	switch runtime.GOOS {
 	case "windows":
-		return fmt.Sprintf("%v-%v-x86_64.zip", ES_NAME, "windows"), nil
+		return fmt.Sprintf("%s-%s-x86_64.zip", ES_NAME, "windows"), nil
 	case "darwin":
-		return fmt.Sprintf("%v-%v-x86_64.tar.gz", ES_NAME, "darwin"), nil
+		return fmt.Sprintf("%s-%s-x86_64.tar.gz", ES_NAME, "darwin"), nil
 	case "linux":
-		return fmt.Sprintf("%v-%v-x86_64.tar.gz", ES_NAME, "linux"), nil
+		return fmt.Sprintf("%s-%s-x86_64.tar.gz", ES_NAME, "linux"), nil
 	default:
 		return "", errors.New("Unsupported platform!")
 	}
