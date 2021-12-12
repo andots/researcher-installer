@@ -7,7 +7,7 @@ import (
 	latest "github.com/tcnksm/go-latest"
 )
 
-const VERSION string = "v0.9.2"
+const VERSION string = "v0.9.3"
 
 func CheckVersion() {
 	githubTag := &latest.GithubTag{
