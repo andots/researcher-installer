@@ -70,18 +70,6 @@ func MoveFile(from string, to string) {
 	HandleError(err)
 }
 
-func GetCurrentDir() string {
-	currentPath, err := os.Getwd()
-	HandleError(err)
-	return currentPath
-}
-
-func RemoveAppDir() {
-	dir := GetAppPath()
-	err := os.RemoveAll(dir)
-	HandleError(err)
-}
-
 func GetFileNameFromUrl(download_url string) string {
 	url_struct, err := url.Parse(download_url)
 	HandleError(err)
@@ -109,4 +97,16 @@ func HandleError(err error) {
 		BlockForWindows()
 		os.Exit(1)
 	}
+}
+
+func GetCurrentDir() string {
+	currentPath, err := os.Getwd()
+	HandleError(err)
+	return currentPath
+}
+
+func RemoveAppDir() {
+	dir := GetAppPath()
+	err := os.RemoveAll(dir)
+	HandleError(err)
 }
